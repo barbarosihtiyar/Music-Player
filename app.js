@@ -1,11 +1,14 @@
-const container = document.querySelector(".container");
-const image     = document.getElementById("music-image");
-const audio     = document.querySelector("#audio");
-const title     = document.querySelector(".title");
-const singer    = document.querySelector(".singer");
-const prev      = document.querySelector("#prev");
-const play      = document.querySelector("#play");
-const next      = document.querySelector("#next");
+const container         = document.querySelector(".container");
+const image             = document.getElementById("music-image");
+const audio             = document.querySelector("#audio");
+const title             = document.querySelector(".title");
+const singer            = document.querySelector(".singer");
+const prev              = document.querySelector("#prev");
+const play              = document.querySelector("#play");
+const next              = document.querySelector("#next");
+const duration          = document.getElementById("duration");  
+const currentTime       = document.getElementById("current-time");
+const progressBar       = document.getElementById("progress-bar");
 
 const player = new MusicPlayer(musicList);
 
@@ -71,3 +74,23 @@ function playMusic(){
     play.classList="fa-solid fa-pause";
     audio.play();
 }
+
+const calculateTime = (seconds) => {
+
+    const minute = Math.floor(seconds / 60);
+    const second = Math.floor(seconds % 60);
+    const asecond = second < 10 ? `0${second}`:`${second}`;
+    const sum = `${minute}:${asecond}`;
+    return sum;
+
+}
+ 
+audio.addEventListener("loadedmetadata", () => {
+duration.textContent = calculateTime(audio.duration) ;
+progressBar.max = Math.floor(audio.duration);
+});
+
+audio.addEventListener("timeupdate", () =>{
+    progressBar.value = Math.floor(audio.currentTime);
+    currentTime.textContent = calculateTime(progressBar.value);
+    });
