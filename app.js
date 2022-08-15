@@ -48,14 +48,14 @@ next.addEventListener("click",function(){
 
 });
 
-function Musicprev(){
+const Musicprev =() =>{
     player.previous();
     let music = player.getMusic();
     displayMusic(music);
     playMusic();
 }
 
-function Musicnext(){
+const Musicnext =() => {
     player.next();
     let music = player.getMusic();
     displayMusic(music);
@@ -63,13 +63,13 @@ function Musicnext(){
 }
 
 
-function pauseMusic(){
+const pauseMusic =() =>{
     container.classList.remove("playing");
     play.classList="fa-solid fa-play";
     audio.pause();
 }
 
-function playMusic(){
+const playMusic =() =>{
     container.classList.add("playing");
     play.classList="fa-solid fa-pause";
     audio.play();
@@ -94,3 +94,11 @@ audio.addEventListener("timeupdate", () =>{
     progressBar.value = Math.floor(audio.currentTime);
     currentTime.textContent = calculateTime(progressBar.value);
     });
+
+
+progressBar.addEventListener("input" , () => {
+
+currentTime.textContent = calculateTime(progressBar.value);
+audio.currentTime=progressBar.value; 
+
+});
